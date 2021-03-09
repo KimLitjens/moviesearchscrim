@@ -31,23 +31,22 @@ export default function SearchMovies() {
             : sortBy === "Low-High" ? [...movies].sort((a, b) => a.vote_average - b.vote_average)
                 : sortBy === "ReleaseDate" ? [...movies].sort((a, b) => new Date(b.release_date) - new Date(a.release_date)) : [...movies].sort((a, b) => a.title.localeCompare(b.title))
         setMovies(sortedMovies)
-        console.log(movies[0])
     }, [sortBy])
 
     return (
         <>
-            <form className="form" onSubmit={searchMovies}>
-                <label className="label" htmlFor="query">Movie Name</label>
-                <input className="input" type="text" name="query"
-                    placeholder="i.e. Jurassic Park"
-                    value={query} onChange={(e) => setQuery(e.target.value)}
-                />
-                <button className="button" type="submit">Search</button>
-            </form>
-            <div className="sortMovies">
+            <div className="form">
+                <form className="movieName" onSubmit={searchMovies}>
+                    <label className="label" htmlFor="query">Movie Name </label>
+                    <input className="input" type="text" name="query"
+                        placeholder="i.e. Jurassic Park"
+                        value={query} onChange={(e) => setQuery(e.target.value)}
+                    />
+                    <button className="button" type="submit">Search</button>
+                </form>
                 <form id="sortForm">
-                    Sort by:
-            <select id="sortSelect" onChange={(e) => setSortBy(e.target.value)}>
+                    <label className="label">Sort By:</label>
+                    <select className="input" id="sortSelect" onChange={(e) => setSortBy(e.target.value)}>
                         <option >---</option>
                         <option value="High-Low">High-Low</option>
                         <option value="Low-High">Low-High</option>
