@@ -3,7 +3,7 @@ import React from "react";
 export default function MovieCard({ movie }) {
     return (
         <div className="card"  >
-            <a href={`https://www.themoviedb.org/movie/${movie.id}`} target="_blank">
+            <a href={`https://www.themoviedb.org/movie/${movie.id}`} target="example">
                 <img className="card--image"
                     src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`}
                     alt={movie.title + ' poster'}

@@ -30,7 +30,9 @@ export default function SearchMovies() {
 
         const sortedMovies = sortBy === "High-Low" ? [...movies].sort((a, b) => b.vote_average - a.vote_average)
             : sortBy === "Low-High" ? [...movies].sort((a, b) => a.vote_average - b.vote_average)
-                : sortBy === "ReleaseDate" ? [...movies].sort((a, b) => new Date(b.release_date) - new Date(a.release_date)) : [...movies].sort((a, b) => a.title.localeCompare(b.title))
+                : sortBy === "NewestFirst" ? [...movies].sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+                    : sortBy === "OldestFirst" ? [...movies].sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
+                        : [...movies].sort((a, b) => a.title.localeCompare(b.title))
         setMovies(sortedMovies)
     }, [sortBy])
 
@@ -52,7 +54,9 @@ export default function SearchMovies() {
                         <option value="High-Low">High-Low</option>
                         <option value="Low-High">Low-High</option>
                         <option value="Title">Title</option>
-                        <option value="ReleaseDate">Release Date</option>
+                        <option value="NewestFirst">Newest first</option>
+                        <option value="OldestFirst">Oldest first</option>
+
                     </select>
                 </form>
             </div>
