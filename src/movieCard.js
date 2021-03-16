@@ -1,17 +1,18 @@
 import React from "react";
 
 export default function MovieCard({ movie }) {
+    const channel = movie.media_type === "movie" ? "movie" : "tv"
     return (
         <div className="card"  >
-            <a href={`https://www.themoviedb.org/movie/${movie.id}`} target="example">
+            <a href={`https://www.themoviedb.org/${channel}/${movie.id}`} target="example">
                 <img className="card--image"
                     src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`}
                     alt={movie.title + ' poster'}
                 />
             </a>
             <div className="card--content">
-                <h3 className="card--title">{movie.title}</h3>
-                <p><small>RELEASE DATE: {movie.release_date}</small></p>
+                <h3 className="card--title">{movie.title || movie.name}</h3>
+                <p><small>RELEASE DATE: {movie.release_date || movie.first_air_date}</small></p>
                 <p><small>RATING: {movie.vote_average}</small></p>
                 <p className="card--desc">{movie.overview}</p>
             </div>

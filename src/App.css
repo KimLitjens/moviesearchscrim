@@ -113,6 +113,12 @@ small {
   color: rgba(245, 245, 245, 0.89);
 }
 
-#sortSelect {
+#sortSelect,
+#channelFilter {
   width: 110px;
+  margin-right: 10px;
+}
+
+.adjustSearch {
+  display: flex;
 }

@@ -7,8 +7,11 @@ export default function SearchMovies() {
     //states- input query, movies
     const [query, setQuery] = useState('');
     //create the state for movies, and update that state appropriate
-    const [movies, setMovies] = useState([]);
+    const [moviesTvShows, setMoviesTvShows] = useState([]);
+    const [filterdMoviesTvShow, setFilterdMoviesTvShow] = useState([])
     const [sortBy, setSortBy] = useState();
+    const [channelAt, setChannelAt] = useState();
+
 
 
     const searchMovies = async (e) => {
@@ -19,22 +22,31 @@ export default function SearchMovies() {
         try {
             const res = await fetch(url);
             const data = await res.json();
-            setMovies(data.results.filter(movie => movie.poster_path))
+            setMoviesTvShows(data.results.filter(movie => movie.poster_path))
+            setFilterdMoviesTvShow(data.results.filter(movie => movie.poster_path))
         } catch (err) {
             console.error(err);
         }
     }
 
     useEffect(() => {
-
-        const sortedMovies = sortBy === "High-Low" ? [...movies].sort((a, b) => b.vote_average - a.vote_average)
-            : sortBy === "Low-High" ? [...movies].sort((a, b) => a.vote_average - b.vote_average)
-                : sortBy === "NewestFirst" ? [...movies].sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
-                    : sortBy === "OldestFirst" ? [...movies].sort((a, b) => new Date(a.release_date) - new Date(b.release_date))
-                        : [...movies].sort((a, b) => a.title.localeCompare(b.title))
-        setMovies(sortedMovies)
+        const sortedMovies = sortBy === "High-Low" ? [...moviesTvShows].sort((a, b) => b.vote_average - a.vote_average)
+            : sortBy === "Low-High" ? [...moviesTvShows].sort((a, b) => a.vote_average - b.vote_average)
+                : sortBy === "NewestFirst" ? [...moviesTvShows].sort((a, b) => new Date(b.release_date || a.first_air_date) - new Date(a.release_date || a.first_air_date))
+                    : sortBy === "OldestFirst" ? [...moviesTvShows].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || a.first_air_date))
+                        : [...moviesTvShows].sort((a, b) => a.title.localeCompare(b.title))
+        setFilterdMoviesTvShow(sortedMovies)
     }, [sortBy])
-    console.log(movies.filter(movie => movie.media_type === "person"))
+
+    useEffect(() => {
+        const selectedChannel = channelAt === "movies" ? [...moviesTvShows].filter(movie => movie.media_type === "movie")
+            : channelAt === "tvShows" ? [...moviesTvShows].filter(movie => movie.media_type === "tv")
+                : [...moviesTvShows]
+        setFilterdMoviesTvShow(selectedChannel)
+    }, [channelAt])
+
+
+    console.log(moviesTvShows.filter(movie => movie.media_type === "tv"))
     return (
         <>
             <div className="searchForm">
@@ -45,17 +57,8 @@ export default function SearchMovies() {
                     />
                     <button className="button" type="submit">Search</button>
                 </form>
-                {/* <form className="selectSearch">
-                    <label className="label">Search for: </label>
-                    <select className="input" id="selectSearchFor"
-                    // onChange={(e) => setSearchFor(e.target.value)}
-                    >
-                        <option value="movie">Movies</option>
-                        <option value="tvShows">TV Shows</option>
-                    </select>
-                </form> */}
             </div>
-            <div className="sortForm">
+            <div className="adjustSearch">
                 <form id="sortForm">
                     <label className="label">Sort By:</label>
                     <select className="input" id="sortSelect" onChange={(e) => setSortBy(e.target.value)}>
@@ -65,12 +68,21 @@ export default function SearchMovies() {
                         <option value="Title">Title</option>
                         <option value="NewestFirst">Newest first</option>
                         <option value="OldestFirst">Oldest first</option>
-
+                    </select>
+                </form>
+                <form className="selectSearch">
+                    <label className="label" >Filter</label>
+                    <select className="input" id="channelFilter"
+                        onChange={(e) => setChannelAt(e.target.value)}
+                    >
+                        <option value="">---</option>
+                        <option value="movies">Movies</option>
+                        <option value="tvShows">TV Shows</option>
                     </select>
                 </form>
             </div>
             <div className="card-list">
-                {movies.map(movie => (
+                {filterdMoviesTvShow.map(movie => (
                     <MovieCard movie={movie} key={movie.id} />
                 ))}
             </div>
