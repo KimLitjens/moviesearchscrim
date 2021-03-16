@@ -14,13 +14,12 @@ export default function SearchMovies() {
     const searchMovies = async (e) => {
         e.preventDefault();
 
-        const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+        const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
 
         try {
             const res = await fetch(url);
             const data = await res.json();
-            setMovies(data.results);
-            console.log(movies[0].id)
+            setMovies(data.results.filter(movie => movie.poster_path))
         } catch (err) {
             console.error(err);
         }
@@ -35,18 +34,28 @@ export default function SearchMovies() {
                         : [...movies].sort((a, b) => a.title.localeCompare(b.title))
         setMovies(sortedMovies)
     }, [sortBy])
-
+    console.log(movies.filter(movie => movie.media_type === "person"))
     return (
         <>
-            <div className="form">
+            <div className="searchForm">
                 <form className="movieName" onSubmit={searchMovies}>
-                    <label className="label" htmlFor="query">Movie Name </label>
                     <input className="input" type="text" name="query"
-                        placeholder="i.e. Jurassic Park"
+                        placeholder="Search for a movie or tv show"
                         value={query} onChange={(e) => setQuery(e.target.value)}
                     />
                     <button className="button" type="submit">Search</button>
                 </form>
+                {/* <form className="selectSearch">
+                    <label className="label">Search for: </label>
+                    <select className="input" id="selectSearchFor"
+                    // onChange={(e) => setSearchFor(e.target.value)}
+                    >
+                        <option value="movie">Movies</option>
+                        <option value="tvShows">TV Shows</option>
+                    </select>
+                </form> */}
+            </div>
+            <div className="sortForm">
                 <form id="sortForm">
                     <label className="label">Sort By:</label>
                     <select className="input" id="sortSelect" onChange={(e) => setSortBy(e.target.value)}>
@@ -61,7 +70,7 @@ export default function SearchMovies() {
                 </form>
             </div>
             <div className="card-list">
-                {movies.filter(movie => movie.poster_path).map(movie => (
+                {movies.map(movie => (
                     <MovieCard movie={movie} key={movie.id} />
                 ))}
             </div>

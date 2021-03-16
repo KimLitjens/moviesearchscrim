@@ -32,13 +32,15 @@ small {
   text-align: center;
 }
 
-.form {
+.searchForm {
   display: grid;
+  margin-bottom: 1.2rem;
 }
 
 .label {
-  font-size: 1.2rem;
+  font-size: 20px;
   margin-bottom: 0.2rem;
+  margin-right: 0.2rem;
   text-transform: uppercase;
 }
 
@@ -49,6 +51,7 @@ small {
   border-radius: 20px;
   border: 1px solid #ddd;
   margin-bottom: 1rem;
+  width: 85%;
 }
 
 .button {
@@ -110,6 +113,6 @@ small {
   color: rgba(245, 245, 245, 0.89);
 }
 
-.label {
-  font-size: 20px;
+#sortSelect {
+  width: 110px;
 }
