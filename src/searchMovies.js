@@ -33,9 +33,9 @@ export default function SearchMovies() {
     useEffect(() => {
         const sortedMovies = sortBy === "High-Low" ? [...moviesTvShows].sort((a, b) => b.vote_average - a.vote_average)
             : sortBy === "Low-High" ? [...moviesTvShows].sort((a, b) => a.vote_average - b.vote_average)
-                : sortBy === "NewestFirst" ? [...moviesTvShows].sort((a, b) => new Date(b.release_date || a.first_air_date) - new Date(a.release_date || a.first_air_date))
-                    : sortBy === "OldestFirst" ? [...moviesTvShows].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || a.first_air_date))
-                        : [...moviesTvShows].sort((a, b) => a.title.localeCompare(b.title))
+                : sortBy === "NewestFirst" ? [...moviesTvShows].sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date))
+                    : sortBy === "OldestFirst" ? [...moviesTvShows].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || b.first_air_date))
+                        : [...moviesTvShows].sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name))
         setFilterdMoviesTvShow(sortedMovies)
     }, [sortBy])
 
@@ -46,8 +46,7 @@ export default function SearchMovies() {
         setFilterdMoviesTvShow(selectedChannel)
     }, [channelAt])
 
-
-    console.log(moviesTvShows.filter(movie => movie.media_type === "tv"))
+    // console.table(filterdMoviesTvShow.map(e => `Release date ${e.release_date || e.first_air_date} ${e.media_type} Name ${e.name || e.title} `))
     return (
         <>
             {/* Searchform  */}
