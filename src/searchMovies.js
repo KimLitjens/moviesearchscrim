@@ -17,7 +17,8 @@ export default function SearchMovies() {
     const searchMovies = async (e) => {
         e.preventDefault();
 
-        const url = `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+        const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`
+            : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
 
         try {
             const res = await fetch(url);
@@ -49,6 +50,7 @@ export default function SearchMovies() {
     console.log(moviesTvShows.filter(movie => movie.media_type === "tv"))
     return (
         <>
+            {/* Searchform  */}
             <div className="searchForm">
                 <form className="movieName" onSubmit={searchMovies}>
                     <input className="input" type="text" name="query"
@@ -58,6 +60,7 @@ export default function SearchMovies() {
                     <button className="button" type="submit">Search</button>
                 </form>
             </div>
+            {/* Adjust Search  */}
             <div className="adjustSearch">
                 <form id="sortForm">
                     <label className="label">Sort By:</label>
@@ -81,6 +84,7 @@ export default function SearchMovies() {
                     </select>
                 </form>
             </div>
+            {/* Display Search */}
             <div className="card-list">
                 {filterdMoviesTvShow.map(movie => (
                     <MovieCard movie={movie} key={movie.id} />
