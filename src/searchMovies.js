@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import MovieCard from './movieCard.js'
+import FilterdGenres from './filterdGenres'
 import { apiKey } from './apiKey'
 
 export default function SearchMovies() {
@@ -11,15 +12,16 @@ export default function SearchMovies() {
     const [filterdMoviesTvShow, setFilterdMoviesTvShow] = useState([])
     const [sortBy, setSortBy] = useState();
     const [channelAt, setChannelAt] = useState();
+    const [genreIds, setGenresIds] = useState([]);
 
-
+    const usedGenres = [...filterdMoviesTvShow.map(e => (e.genre_ids))].join().split(',')
 
     const searchMovies = async (e) => {
         e.preventDefault();
 
         const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`
             : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
-
+        const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
         try {
             const res = await fetch(url);
             const data = await res.json();
@@ -28,7 +30,16 @@ export default function SearchMovies() {
         } catch (err) {
             console.error(err);
         }
+
+        try {
+            const res = await fetch(genreUrl);
+            const data = await res.json();
+            setGenresIds(data.genres)
+        } catch (err) {
+            console.error(err);
+        }
     }
+
 
     useEffect(() => {
         const sortedMovies = sortBy === "High-Low" ? [...moviesTvShows].sort((a, b) => b.vote_average - a.vote_average)
@@ -46,7 +57,6 @@ export default function SearchMovies() {
         setFilterdMoviesTvShow(selectedChannel)
     }, [channelAt])
 
-    // console.table(filterdMoviesTvShow.map(e => `Release date ${e.release_date || e.first_air_date} ${e.media_type} Name ${e.name || e.title} `))
     return (
         <>
             {/* Searchform  */}
@@ -61,6 +71,7 @@ export default function SearchMovies() {
             </div>
             {/* Adjust Search  */}
             <div className="adjustSearch">
+                {/* Sort Search */}
                 <form id="sortForm">
                     <label className="label">Sort By:</label>
                     <select className="input" id="sortSelect" onChange={(e) => setSortBy(e.target.value)}>
@@ -72,6 +83,7 @@ export default function SearchMovies() {
                         <option value="OldestFirst">Oldest first</option>
                     </select>
                 </form>
+                {/* Filter Search  */}
                 <form className="selectSearch">
                     <label className="label" >Filter</label>
                     <select className="input" id="channelFilter"
@@ -82,6 +94,12 @@ export default function SearchMovies() {
                         <option value="tvShows">TV Shows</option>
                     </select>
                 </form>
+            </div>
+
+            <div className="genres">
+                {genreIds.filter(e => usedGenres.indexOf(e.id.toString()) > -1).map(genre => (
+                    <FilterdGenres genreId={genre} key={genre.id} />
+                ))}
             </div>
             {/* Display Search */}
             <div className="card-list">
