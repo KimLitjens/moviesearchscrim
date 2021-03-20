@@ -20,7 +20,8 @@ export default function SearchMovies() {
         e.preventDefault();
 
         const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`
-            : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+            : /\d{4}/.test(parseInt(query)) ? `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${query}`
+                : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
         const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
         try {
             const res = await fetch(url);
@@ -40,7 +41,7 @@ export default function SearchMovies() {
         }
     }
 
-
+    console.log(/\d{4}/.test(parseInt(query)))
     useEffect(() => {
         const sortedMovies = sortBy === "High-Low" ? [...moviesTvShows].sort((a, b) => b.vote_average - a.vote_average)
             : sortBy === "Low-High" ? [...moviesTvShows].sort((a, b) => a.vote_average - b.vote_average)
@@ -94,13 +95,14 @@ export default function SearchMovies() {
                         <option value="tvShows">TV Shows</option>
                     </select>
                 </form>
+                {/* <div className="genres">
+                    {genreIds.filter(e => usedGenres.indexOf(e.id.toString()) > -1).map(genre => (
+                        <FilterdGenres genreId={genre} key={genre.id} />
+                    ))}
+                </div> */}
             </div>
 
-            <div className="genres">
-                {genreIds.filter(e => usedGenres.indexOf(e.id.toString()) > -1).map(genre => (
-                    <FilterdGenres genreId={genre} key={genre.id} />
-                ))}
-            </div>
+
             {/* Display Search */}
             <div className="card-list">
                 {filterdMoviesTvShow.map(movie => (

@@ -122,3 +122,9 @@ small {
 .adjustSearch {
   display: flex;
 }
+
+.genreChecbox {
+  display: inline-block;
+  font-size: medium;
+  margin-left: 1rem;
+}

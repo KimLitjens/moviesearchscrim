@@ -2,8 +2,8 @@ import React from "react";
 
 export default function FilterGenres({ genreId }) {
     return (
-        <div>
-            <input type="checkbox" /><p><small>{genreId.name}</small></p>
+        <div className="genreChecbox">
+            <input type="checkbox" /><label>{genreId.name}</label>
         </div>
     )
 }
