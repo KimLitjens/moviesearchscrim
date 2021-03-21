@@ -114,17 +114,12 @@ small {
 }
 
 #sortSelect,
-#channelFilter {
+#channelFilter,
+#genreFilter {
   width: 110px;
   margin-right: 10px;
 }
 
 .adjustSearch {
   display: flex;
-}
-
-.genreChecbox {
-  display: inline-block;
-  font-size: medium;
-  margin-left: 1rem;
 }

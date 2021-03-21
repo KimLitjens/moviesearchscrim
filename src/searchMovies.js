@@ -13,6 +13,7 @@ export default function SearchMovies() {
     const [sortBy, setSortBy] = useState();
     const [channelAt, setChannelAt] = useState();
     const [genreIds, setGenresIds] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState([]);
 
     const usedGenres = [...filterdMoviesTvShow.map(e => (e.genre_ids))].join().split(',')
 
@@ -26,6 +27,7 @@ export default function SearchMovies() {
         try {
             const res = await fetch(url);
             const data = await res.json();
+            console.log(data.results)
             setMoviesTvShows(data.results.filter(movie => movie.poster_path))
             setFilterdMoviesTvShow(data.results.filter(movie => movie.poster_path))
         } catch (err) {
@@ -41,7 +43,6 @@ export default function SearchMovies() {
         }
     }
 
-    console.log(/\d{4}/.test(parseInt(query)))
     useEffect(() => {
         const sortedMovies = sortBy === "High-Low" ? [...moviesTvShows].sort((a, b) => b.vote_average - a.vote_average)
             : sortBy === "Low-High" ? [...moviesTvShows].sort((a, b) => a.vote_average - b.vote_average)
@@ -58,6 +59,12 @@ export default function SearchMovies() {
         setFilterdMoviesTvShow(selectedChannel)
     }, [channelAt])
 
+    useEffect(() => {
+        console.log(typeof (moviesTvShows[2].genre_ids[0]))
+        // const filterdByGenre = [...moviesTvShows].filter(e => (selectedGenre.indexOf(e.id.toString()) > -1))
+        // console.log(filterdByGenre)
+        // setFilterdMoviesTvShow(filterdByGenre)
+    }, [selectedGenre])
     return (
         <>
             {/* Searchform  */}
@@ -95,14 +102,18 @@ export default function SearchMovies() {
                         <option value="tvShows">TV Shows</option>
                     </select>
                 </form>
-                {/* <div className="genres">
-                    {genreIds.filter(e => usedGenres.indexOf(e.id.toString()) > -1).map(genre => (
-                        <FilterdGenres genreId={genre} key={genre.id} />
-                    ))}
-                </div> */}
+                <form className="selectSearch">
+                    <label className="label">Genre</label>
+                    <select className="input" id="genreFilter"
+                        onChange={(e) => setSelectedGenre(e.target.value)}
+                    >
+                        <option value="">---</option>
+                        {genreIds.filter(e => usedGenres.indexOf(e.id.toString()) > -1).map(genre => (
+                            <FilterdGenres genreId={genre} key={genre.id} />
+                        ))}
+                    </select>
+                </form>
             </div>
-
-
             {/* Display Search */}
             <div className="card-list">
                 {filterdMoviesTvShow.map(movie => (
