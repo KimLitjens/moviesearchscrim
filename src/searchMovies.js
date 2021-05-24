@@ -60,7 +60,6 @@ export default function SearchMovies() {
     }, [channelAt])
 
     useEffect(() => {
-        console.log(typeof (moviesTvShows[2].genre_ids[0]))
         // const filterdByGenre = [...moviesTvShows].filter(e => (selectedGenre.indexOf(e.id.toString()) > -1))
         // console.log(filterdByGenre)
         // setFilterdMoviesTvShow(filterdByGenre)
@@ -102,7 +101,7 @@ export default function SearchMovies() {
                         <option value="tvShows">TV Shows</option>
                     </select>
                 </form>
-                <form className="selectSearch">
+                {/* <form className="selectSearch">
                     <label className="label">Genre</label>
                     <select className="input" id="genreFilter"
                         onChange={(e) => setSelectedGenre(e.target.value)}
@@ -112,7 +111,7 @@ export default function SearchMovies() {
                             <FilterdGenres genreId={genre} key={genre.id} />
                         ))}
                     </select>
-                </form>
+                </form> */}
             </div>
             {/* Display Search */}
             <div className="card-list">
