@@ -1,14 +1,12 @@
 // import React from 'react'
 // import ReactDOM from 'react-dom'
-import SearchMovies from "./searchMovies"
+import { Dashboard } from "./pages"
 import './App.css';
+
 
 function App() {
   return (
-    <div className="container">
-      <h1 className="title">My Movie Search</h1>
-      <SearchMovies />
-    </div>
+    <Dashboard />
   );
 }
 

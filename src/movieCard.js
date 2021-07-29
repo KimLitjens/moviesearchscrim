@@ -2,6 +2,7 @@ import React from "react";
 
 export default function MovieCard({ movie }) {
     const channel = movie.media_type === "movie" ? "movie" : "tv"
+    console.log(movie)
     return (
         <div className="card"  >
             <a href={`https://www.themoviedb.org/${channel}/${movie.id}`} target="example">
