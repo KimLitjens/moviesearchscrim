@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import MovieCard from './movieCard.js'
-import FilterdGenres from './filterdGenres'
 import { apiKey } from './apiKey'
 
 export default function SearchMovies() {
@@ -12,10 +11,7 @@ export default function SearchMovies() {
     const [filterdMoviesTvShow, setFilterdMoviesTvShow] = useState([])
     const [sortBy, setSortBy] = useState();
     const [channelAt, setChannelAt] = useState();
-    const [genreIds, setGenresIds] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState([]);
 
-    const usedGenres = [...filterdMoviesTvShow.map(e => (e.genre_ids))].join().split(',')
 
     const searchMovies = async (e) => {
         e.preventDefault();
@@ -25,19 +21,13 @@ export default function SearchMovies() {
                 : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
         const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
         try {
-            const res = await fetch(url);
-            const data = await res.json();
-            console.log(data.results)
-            setMoviesTvShows(data.results.filter(movie => movie.poster_path))
-            setFilterdMoviesTvShow(data.results.filter(movie => movie.poster_path))
-        } catch (err) {
-            console.error(err);
-        }
-
-        try {
-            const res = await fetch(genreUrl);
-            const data = await res.json();
-            setGenresIds(data.genres)
+            fetch(url)
+                .then(response => response.json())
+                .then(response => response.results.filter(movie => movie.poster_path))
+                .then(response => {
+                    setMoviesTvShows(response)
+                    setFilterdMoviesTvShow(response)
+                })
         } catch (err) {
             console.error(err);
         }
@@ -59,11 +49,6 @@ export default function SearchMovies() {
         setFilterdMoviesTvShow(selectedChannel)
     }, [channelAt])
 
-    useEffect(() => {
-        // const filterdByGenre = [...moviesTvShows].filter(e => (selectedGenre.indexOf(e.id.toString()) > -1))
-        // console.log(filterdByGenre)
-        // setFilterdMoviesTvShow(filterdByGenre)
-    }, [selectedGenre])
     return (
         <>
             {/* Searchform  */}
