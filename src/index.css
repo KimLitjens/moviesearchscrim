@@ -30,27 +30,7 @@ html {
     max-width: 1000px;
     padding: 40px;
   }
-  
-  /* @media (min-width: 786px) {
-    .form {
-      grid-template-columns: auto 1fr auto;
-      grid-gap: 1rem;
-      align-items: center;
-    }
-  
-    .input {
-      margin-bottom: 0;
-    }
-  } */
-  
-  .card-list {
-    margin-top: 4rem;
-    /* background-color: red; */
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-column-gap: 30px;
-    grid-row-gap: 50px;
-  }
+
   
   .card {
     padding: 2rem 4rem;
