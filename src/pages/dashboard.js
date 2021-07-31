@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { apiKey } from '../apiKey'
-import { HeaderContainer, MovieCard } from '../containers'
-import { Search, Filter } from '../components'
+import { HeaderContainer, MovieCard, } from '../containers'
+import { Search, Filter, Cards } from '../components'
 
 export default function Dashboard() {
     const [query, setQuery] = useState('');
@@ -85,11 +85,11 @@ export default function Dashboard() {
                     </Filter.Select>
                 </Filter.Form>
             </Filter>
-            <div className="card-list">
+            <Cards >
                 {filterdMoviesTvShow.map(movie => (
                     <MovieCard movie={movie} key={movie.id} />
                 ))}
-            </div>
+            </Cards>
         </div>
     )
 
