@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { apiKey } from '../apiKey'
-import { HeaderContainer, MovieCard, } from '../containers'
+import { HeaderContainer, MovieCardContainer, } from '../containers'
 import { Search, Filter, Cards } from '../components'
 
 export default function Dashboard() {
@@ -87,7 +87,7 @@ export default function Dashboard() {
             </Filter>
             <Cards >
                 {filterdMoviesTvShow.map(movie => (
-                    <MovieCard movie={movie} key={movie.id} />
+                    <MovieCardContainer movie={movie} key={movie.id} />
                 ))}
             </Cards>
         </div>
