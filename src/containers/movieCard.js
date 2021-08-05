@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import ReactDom from 'react-dom'
 import { apiKey } from '../apiKey'
 import { MovieCard } from '../components'
+import YouTube from 'react-youtube'
 
 
 export default function MovieCardContainer({ movie }) {
     const channel = movie.media_type === "movie" ? "movie" : "tv"
     const [trailerInfo, setTrailerInfo] = useState([])
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/${channel}/${movie.id}/videos?api_key=${apiKey}&language=en-US`)
@@ -15,6 +18,16 @@ export default function MovieCardContainer({ movie }) {
                 setTrailerInfo(data)
             })
     }, []);
+
+    const opts = {
+        height: '390',
+        width: '640',
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+        },
+    }
+
 
     return (
         <MovieCard  >
@@ -28,7 +41,10 @@ export default function MovieCardContainer({ movie }) {
             <MovieCard.ReleaseDate><small>RELEASE DATE: {movie.release_date || movie.first_air_date}</small></MovieCard.ReleaseDate>
             <MovieCard.Rating><small>RATING: {movie.vote_average}</small></MovieCard.Rating>
             <MovieCard.Overview>{movie.overview}</MovieCard.Overview>
-            {trailerInfo ? <MovieCard.Trailer href={`https://www.youtube.com/watch?v=${trailerInfo.key}`} target="_blank">Trailer</MovieCard.Trailer> : null}
+            {trailerInfo ? <MovieCard.Trailer onClick={() => setIsOpen(!isOpen)} >Trailer</MovieCard.Trailer> : null}
+            {isOpen ? <YouTube videoId={trailerInfo.key} opts={opts} /> : null}
+
+
         </MovieCard>
     )
 }
