@@ -1,4 +1,5 @@
 import React from 'react'
+import YouTube from 'react-youtube'
 
 export default function MovieCard({ children, ...restProps }) {
     return <div {...restProps} className="px-16 py-8 rounded-xl shadow-2xl mb-8 mr-8 bg-grey text-primary justify-center">{children}</div>
@@ -30,4 +31,12 @@ MovieCard.Overview = function Overview({ children, ...restProps }) {
 
 MovieCard.Trailer = function Trailer({ children, ...restProps }) {
     return <button {...restProps} className="bg-primary text-white mt-20 rounded-full px-16 py-4 text-3xl ">{children}</button>
+}
+
+MovieCard.Overlay = function Overlay({ children, ...restProps }) {
+    return <div {...restProps} className="fixed inset-0 bg-secondary bg-opacity-80 z-50">{children}</div>
+}
+
+MovieCard.Youtube = function Youtube({ children, ...restProps }) {
+    return <YouTube {...restProps} className="fixed m-auto z-50" />
 }
