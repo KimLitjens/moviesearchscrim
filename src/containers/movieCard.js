@@ -5,7 +5,7 @@ import { MovieCard } from '../components'
 
 
 export default function MovieCardContainer({ movie }) {
-    const channel = movie.media_type === "movie" ? "movie" : "tv"
+    const channel = movie.media_type === "tv" ? "tv" : "movie"
     const [trailerInfo, setTrailerInfo] = useState([])
     const [isOpen, setIsOpen] = useState(false)
 
