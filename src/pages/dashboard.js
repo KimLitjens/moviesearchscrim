@@ -28,6 +28,11 @@ export default function Dashboard() {
         } catch (err) {
             console.error(err);
         }
+
+        const filterBy = document.getElementById("filterBy");
+        filterBy.selectedIndex = 0;
+        const sortBy = document.getElementById("sortBy");
+        sortBy.selectedIndex = 0;
     }
 
     useEffect(() => {
@@ -64,8 +69,8 @@ export default function Dashboard() {
                 {/* Sort Search */}
                 <Filter.Form>
                     <Filter.Label >Sort By:</Filter.Label>
-                    <Filter.Select onChange={(e) => setSortBy(e.target.value)}>
-                        <option >---</option>
+                    <Filter.Select id="sortBy" onChange={(e) => setSortBy(e.target.value)}>
+                        <option selected>---</option>
                         <option value="High-Low">High-Low</option>
                         <option value="Low-High">Low-High</option>
                         <option value="Title">Title</option>
@@ -76,7 +81,7 @@ export default function Dashboard() {
                 {/* Filter Search  */}
                 <Filter.Form >
                     <Filter.Label>Filter:</Filter.Label>
-                    <Filter.Select
+                    <Filter.Select id="filterBy"
                         onChange={(e) => setChannelAt(e.target.value)}
                     >
                         <option value="">---</option>
