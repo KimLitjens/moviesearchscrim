@@ -42,12 +42,11 @@ export default function MovieCardContainer({ movie }) {
             {trailerInfo ? <MovieCard.Trailer onClick={() => setIsOpen(true)} >Trailer</MovieCard.Trailer> : null}
             {isOpen ? ReactDom.createPortal(
                 <MovieCard.Overlay onClick={() => setIsOpen(false)}>
-                    <MovieCard.Youtube videoId={trailerInfo.key} opts={opts} />
+                    <MovieCard.Container>
+                        <MovieCard.Youtube videoId={trailerInfo.key} opts={opts} />
+                    </MovieCard.Container>
                 </MovieCard.Overlay>,
                 document.body) : null}
-
-            {/* {trailerInfo ? <MovieCard.Trailer href={`https://www.youtube.com/watch?v=${trailerInfo.key}`} target="_blank">Trailer</MovieCard.Trailer> : null} */}
-            {/* <MovieCard.Trailer href={`https://www.youtube.com/watch?v=${trailerInfo.key}`} target="_blank">Trailer</MovieCard.Trailer> : null} */}
         </MovieCard>
     )
 }
