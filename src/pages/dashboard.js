@@ -45,7 +45,8 @@ export default function Dashboard() {
             : sortBy === "Low-High" ? [...filterdMoviesTvShow].sort((a, b) => a.vote_average - b.vote_average)
                 : sortBy === "NewestFirst" ? [...filterdMoviesTvShow].sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date))
                     : sortBy === "OldestFirst" ? [...filterdMoviesTvShow].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || b.first_air_date))
-                        : [...filterdMoviesTvShow].sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name))
+                        : sortBy === "Title" ? [...filterdMoviesTvShow].sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name))
+                            : [...filterdMoviesTvShow]
         setFilterdMoviesTvShow(sortedMovies)
     }, [sortBy])
 
@@ -53,13 +54,11 @@ export default function Dashboard() {
         const selectedChannel = channelAt === "movies" ? [...moviesTvShows].filter(movie => movie.media_type === "movie")
             : channelAt === "tvShows" ? [...moviesTvShows].filter(movie => movie.media_type === "tv")
                 : [...moviesTvShows]
-        setFilterdMoviesTvShow(selectedChannel)
-    }, [channelAt])
 
-    useEffect(() => {
-        const filterdByGenre = [...moviesTvShows].filter(i => i.genre_ids.includes(parseInt(selectedGenreId)))
+        const filterdByGenre = !!selectedGenreId ? [...selectedChannel].filter(i => i.genre_ids.includes(parseInt(selectedGenreId))) : [...selectedChannel]
+
         setFilterdMoviesTvShow(filterdByGenre)
-    }, [selectedGenreId])
+    }, [channelAt, selectedGenreId])
 
     useEffect(() => {
         let genreIds = []
