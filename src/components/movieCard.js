@@ -2,11 +2,11 @@ import React from 'react'
 import YouTube from 'react-youtube'
 
 export default function MovieCard({ children, ...restProps }) {
-    return <div {...restProps} className="px-16 py-8 rounded-xl shadow-2xl mb-8 mr-8 bg-grey text-primary justify-center">{children}</div>
+    return <div {...restProps} className="flex flex-col px-16 py-8 rounded-xl shadow-2xl mb-8 mr-8 bg-grey text-primary">{children}</div>
 }
 
 MovieCard.Title = function Title({ children, ...restProps }) {
-    return <h3 {...restProps} className="my-4 text-5xl text-center">{children}</h3>
+    return <h3 {...restProps} className="my-4 text-5xl text-white text-center">{children}</h3>
 }
 
 MovieCard.Image = function Image({ children, ...restProps }) {
@@ -26,11 +26,11 @@ MovieCard.Rating = function Rating({ children, ...restProps }) {
 }
 
 MovieCard.Overview = function Overview({ children, ...restProps }) {
-    return <p {...restProps} className="text-white text-center mb-8">{children}</p>
+    return <p {...restProps} className="text-white text-center my-8">{children}</p>
 }
 
 MovieCard.Trailer = function Trailer({ children, ...restProps }) {
-    return <button {...restProps} className="bg-primary text-white mt-20 rounded-full px-16 py-4 text-3xl ">{children}</button>
+    return <button {...restProps} className=" bg-primary text-white mt-20 rounded-full px-16 py-4 text-3xl ">{children}</button>
 }
 
 MovieCard.Overlay = function Overlay({ children, ...restProps }) {
