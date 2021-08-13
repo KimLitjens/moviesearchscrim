@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from 'react-dom'
-import { apiKey } from '../apiKey'
 import { MovieCard } from '../components'
 
 
@@ -8,9 +7,10 @@ export default function MovieCardContainer({ movie }) {
     const channel = movie.media_type === "tv" ? "tv" : "movie"
     const [trailerInfo, setTrailerInfo] = useState([])
     const [isOpen, setIsOpen] = useState(false)
+    const API_SECRET = process.env.REACT_APP_API_SECRET
 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/${channel}/${movie.id}/videos?api_key=${apiKey}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/${channel}/${movie.id}/videos?api_key=${API_SECRET}&language=en-US`)
             .then(response => response.json())
             .then(response => response.results.find(result => result.type === "Trailer"))
             .then(data => {

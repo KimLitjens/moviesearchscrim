@@ -7,9 +7,9 @@
 
 # testing
 /coverage
-apiKey.js
 
 # production
+.env
 
 # misc
 .DS_Store

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { apiKey } from '../apiKey'
 import { HeaderContainer, MovieCardContainer, } from '../containers'
 import { Search, Filter, Cards } from '../components'
 import { allGenres } from '../allGenres'
@@ -13,13 +12,14 @@ export default function Dashboard() {
     const [usedGenres, setUsedGenres] = useState([])
     const [selectedGenreId, setSelectedGenreId] = useState()
 
+    const API_SECRET = process.env.REACT_APP_API_SECRET
 
     const searchMovies = async (e) => {
         e.preventDefault();
 
-        const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${apiKey}`
-            : /\d{4}/.test(parseInt(query)) ? `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${query}`
-                : `https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=en-US&query=${query}&page=1&include_adult=false`;
+        const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${API_SECRET}`
+            : /\d{4}/.test(parseInt(query)) ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_SECRET}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${query}`
+                : `https://api.themoviedb.org/3/search/multi?api_key=${API_SECRET}&language=en-US&query=${query}&page=1&include_adult=false`;
         try {
             fetch(url)
                 .then(response => response.json())
