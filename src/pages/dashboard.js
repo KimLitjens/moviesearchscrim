@@ -17,27 +17,23 @@ export default function Dashboard() {
     const searchMovies = async (e) => {
         e.preventDefault();
 
-        const url = query === "popular" ? `https://api.themoviedb.org/3/trending/all/week?api_key=${API_SECRET}`
-            : /\d{4}/.test(parseInt(query)) ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_SECRET}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=${query}`
-                : `https://api.themoviedb.org/3/search/multi?api_key=${API_SECRET}&language=en-US&query=${query}&page=1&include_adult=false`;
+        const url = "/.netlify/functions/fetchMovies"
         try {
-            fetch(url)
-                .then(response => response.json())
-                .then(response => response.results.filter(movie => movie.poster_path))
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({
+                    query: query,
+                    apiKey: API_SECRET
+                }),
+            }).then((response) => response.json())
+                .then(response => response.data.filter(movie => movie.poster_path))
                 .then(response => {
                     setMoviesTvShows(response)
                     setFilterdMoviesTvShow(response)
-                })
+                });
         } catch (err) {
             console.error(err);
         }
-
-        const filterByType = document.getElementById("filterByType");
-        filterByType.selectedIndex = 0;
-        const sortBy = document.getElementById("sortBy");
-        sortBy.selectedIndex = 0;
-        const filterByGenre = document.getElementById("filterByGenre");
-        filterByGenre.selectedIndex = 0;
     }
 
     useEffect(() => {
