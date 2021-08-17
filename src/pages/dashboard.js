@@ -12,7 +12,6 @@ export default function Dashboard() {
     const [usedGenres, setUsedGenres] = useState([])
     const [selectedGenreId, setSelectedGenreId] = useState()
 
-    const API_SECRET = process.env.REACT_APP_API_SECRET
 
     const searchMovies = async (e) => {
         e.preventDefault();
@@ -23,7 +22,6 @@ export default function Dashboard() {
                 method: "POST",
                 body: JSON.stringify({
                     query: query,
-                    apiKey: API_SECRET
                 }),
             }).then((response) => response.json())
                 .then(response => response.data.filter(movie => movie.poster_path))
