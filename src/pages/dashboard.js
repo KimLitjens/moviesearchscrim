@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { HeaderContainer, MovieCardContainer, } from '../containers'
-import { Search, Filter, Cards } from '../components'
+import { Search, Filter, Cards, Footer } from '../components'
 import { allGenres } from '../allGenres'
 
 export default function Dashboard() {
@@ -32,6 +32,12 @@ export default function Dashboard() {
         } catch (err) {
             console.error(err);
         }
+        const filterByType = document.getElementById("filterByType");
+        filterByType.selectedIndex = 0;
+        const sortBy = document.getElementById("sortBy");
+        sortBy.selectedIndex = 0;
+        const filterByGenre = document.getElementById("filterByGenre");
+        filterByGenre.selectedIndex = 0;
     }
 
     useEffect(() => {
@@ -114,6 +120,8 @@ export default function Dashboard() {
                     <MovieCardContainer movie={movie} key={movie.id} />
                 ))}
             </Cards>
+            {filterdMoviesTvShow.length > 0 ? <Footer>*This product uses the TMDb API but is not endorsed or certified by TMDb.</Footer>
+                : null}
         </div>
     )
 
