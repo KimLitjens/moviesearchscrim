@@ -1,6 +1,4 @@
-// import React from 'react'
-// import ReactDOM from 'react-dom'
-import { Dashboard } from "./pages"
+import Dashboard from "./pages/dashboard"
 
 function App() {
   return (
