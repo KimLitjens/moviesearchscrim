@@ -5,7 +5,7 @@ export default function Filter({ children, ...restProps }) {
 }
 
 Filter.Label = function Label({ children, ...restProps }) {
-    return <h1 {...restProps} className="text-4xl uppercase mb-1 mr-1">{children}</h1>
+    return <h2 {...restProps} className="uppercase mb-1 mr-1">{children}</h2>
 }
 
 Filter.Form = function Form({ children, ...restProps }) {

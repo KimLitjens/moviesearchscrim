@@ -5,5 +5,5 @@ export default function Header({ children, ...restProps }) {
 }
 
 Header.Title = function Title({ children, ...restProps }) {
-    return <h1 {...restProps} className="text-center text-7xl mb-4">{children}</h1>
+    return <h1 {...restProps} className="text-center mb-4">{children}</h1>
 }
