@@ -30,7 +30,7 @@ MovieCard.Overview = function Overview({ children, ...restProps }) {
 }
 
 MovieCard.Trailer = function Trailer({ children, ...restProps }) {
-    return <button {...restProps} className=" bg-primary text-white mt-20 rounded-full px-16 py-4 text-3xl ">{children}</button>
+    return <button {...restProps} className=" bg-primary text-white mt-20 rounded-full py-4 text-3xl ">{children}</button>
 }
 
 MovieCard.Overlay = function Overlay({ children, ...restProps }) {
