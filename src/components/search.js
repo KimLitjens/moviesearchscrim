@@ -5,7 +5,7 @@ export default function Search({ children, ...restProps }) {
 }
 
 Search.Form = function Search({ children, ...restProps }) {
-    return <form {...restProps} className="mb-5">{children}</form>
+    return <form {...restProps} className="mb-5 sm:grid grid-cols-4">{children}</form>
 }
 
 Search.Button = function Search({ children, ...restProps }) {
@@ -14,5 +14,5 @@ Search.Button = function Search({ children, ...restProps }) {
 }
 
 Search.Input = function Input({ children, ...restProps }) {
-    return <input {...restProps} className="text-2xl leading-10 border rounded-3xl mb-4 px-8 py-2 mr-2.5 w-5/6">{children}</input>
+    return <input {...restProps} className="text-2xl leading-10 mb-4 border rounded-3xl px-8 py-2 mr-2.5 sm:col-span-3 sm:mb-0">{children}</input>
 }

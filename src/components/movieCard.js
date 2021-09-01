@@ -6,7 +6,7 @@ export default function MovieCard({ children, ...restProps }) {
 }
 
 MovieCard.Title = function Title({ children, ...restProps }) {
-    return <h3 {...restProps} className="my-4 text-5xl text-white text-center">{children}</h3>
+    return <h1 {...restProps} className="my-4 -mx-14 text-white text-center">{children}</h1>
 }
 
 MovieCard.Image = function Image({ children, ...restProps }) {
