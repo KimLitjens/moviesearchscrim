@@ -10,7 +10,7 @@ Search.Form = function Search({ children, ...restProps }) {
 
 Search.Button = function Search({ children, ...restProps }) {
     return <button {...restProps}
-        className="hover:opacity-75 bg-primary text-2xl px-8 py-4 ml-2 rounded-full">{children}</button>
+        className="bg-primary text-2xl px-8 py-4 rounded-full sm:ml-2 hover:opacity-75 ">{children}</button>
 }
 
 Search.Input = function Input({ children, ...restProps }) {
