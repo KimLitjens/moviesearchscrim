@@ -43,7 +43,9 @@ export default function MovieCardContainer({ movie }) {
             {isOpen ? ReactDom.createPortal(
                 <MovieCard.Overlay onClick={() => setIsOpen(false)}>
                     <MovieCard.Container>
+                        {/* <MovieCard.YoutubeContainer> */}
                         <MovieCard.Youtube videoId={trailerInfo.key} opts={opts} />
+                        {/* </MovieCard.YoutubeContainer> */}
                     </MovieCard.Container>
                 </MovieCard.Overlay>,
                 document.body) : null}

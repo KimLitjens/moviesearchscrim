@@ -37,8 +37,12 @@ MovieCard.Overlay = function Overlay({ children, ...restProps }) {
     return <div {...restProps} className="fixed inset-0 bg-secondary bg-opacity-80 z-50 h-screen">{children}</div>
 }
 
+MovieCard.YoutubeContainer = function Youtube({ children, ...restProps }) {
+    return <div {...restProps} className="aspect-w-16 aspect-h-9">{children}</div>
+}
+
 MovieCard.Youtube = function Youtube({ children, ...restProps }) {
-    return <YouTube {...restProps} className=" m-auto z-50" />
+    return <YouTube {...restProps} className="m-auto z-50" />
 }
 
 MovieCard.Container = function Container({ children, ...restProps }) {
