@@ -120,7 +120,7 @@ export default function Dashboard() {
                     <MovieCardContainer movie={movie} key={movie.id} />
                 ))}
             </Cards>
-            {filterdMoviesTvShow.length > 0 ? <Footer>*This product uses the TMDb API but is not endorsed or certified by TMDb.</Footer>
+            {filterdMoviesTvShow.length > 0 ? <Footer><Footer.Link href="https://www.themoviedb.org/" target="_blank">*This product uses the TMDb API but is not endorsed or certified by TMDb</Footer.Link>.</Footer>
                 : null}
         </div>
     )
