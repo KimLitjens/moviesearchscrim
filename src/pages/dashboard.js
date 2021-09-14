@@ -32,28 +32,48 @@ export default function Dashboard() {
         } catch (err) {
             console.error(err);
         }
+
         const filterByType = document.getElementById("filterByType");
         filterByType.selectedIndex = 0;
+
         const sortBy = document.getElementById("sortBy");
         sortBy.selectedIndex = 0;
+
         const filterByGenre = document.getElementById("filterByGenre");
         filterByGenre.selectedIndex = 0;
     }
 
     useEffect(() => {
-        const sortedMovies = sortBy === "High-Low" ? [...filterdMoviesTvShow].sort((a, b) => b.vote_average - a.vote_average)
-            : sortBy === "Low-High" ? [...filterdMoviesTvShow].sort((a, b) => a.vote_average - b.vote_average)
-                : sortBy === "NewestFirst" ? [...filterdMoviesTvShow].sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date))
-                    : sortBy === "OldestFirst" ? [...filterdMoviesTvShow].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || b.first_air_date))
-                        : sortBy === "Title" ? [...filterdMoviesTvShow].sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name))
-                            : [...filterdMoviesTvShow]
+        let sortedMovies
+
+        if (sortBy === "High-Low") {
+            sortedMovies = [...filterdMoviesTvShow].sort((a, b) => b.vote_average - a.vote_average)
+        } else if (sortBy === "Low-High") {
+            sortedMovies = [...filterdMoviesTvShow].sort((a, b) => a.vote_average - b.vote_average)
+        } else if (sortBy === "NewestFirst") {
+            sortedMovies = [...filterdMoviesTvShow].sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date))
+        } else if (sortBy === "OldestFirst") {
+            sortedMovies = [...filterdMoviesTvShow].sort((a, b) => new Date(a.release_date || a.first_air_date) - new Date(b.release_date || b.first_air_date))
+        } else if (sortBy === "Title") {
+            [...filterdMoviesTvShow].sort((a, b) => (a.title || a.name).localeCompare(b.title || b.name))
+        } else {
+            sortedMovies = [...filterdMoviesTvShow]
+        }
+
         setFilterdMoviesTvShow(sortedMovies)
+
     }, [sortBy])
 
     useEffect(() => {
-        const selectedChannel = channelAt === "movies" ? [...moviesTvShows].filter(movie => movie.media_type === "movie")
-            : channelAt === "tvShows" ? [...moviesTvShows].filter(movie => movie.media_type === "tv")
-                : [...moviesTvShows]
+        let selectedChannel
+
+        if (channelAt === "movies") {
+            selectedChannel = [...moviesTvShows].filter(movie => movie.media_type === "movie")
+        } else if (channelAt === "tvShows") {
+            selectedChannel = [...moviesTvShows].filter(movie => movie.media_type === "tv")
+        } else {
+            selectedChannel = [...moviesTvShows]
+        }
 
         const filterdByGenre = !!selectedGenreId ? [...selectedChannel].filter(i => i.genre_ids.includes(parseInt(selectedGenreId))) : [...selectedChannel]
 
@@ -62,8 +82,11 @@ export default function Dashboard() {
 
     useEffect(() => {
         let genreIds = []
+
         moviesTvShows.map(e => genreIds = genreIds.concat(e.genre_ids))
+
         const usedGenres = allGenres.filter(g => genreIds.includes(g.id))
+
         setUsedGenres(usedGenres)
     }, [filterdMoviesTvShow])
 
